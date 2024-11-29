@@ -14,6 +14,7 @@ const FriendReq = () => {
   const db = getDatabase();
 // ---------------------- function part -----------------------
 const handelRemove = (CancelData)=>{
+  remove(ref(db , 'FriendRequest/' + CancelData.key))
   
 
 } 
