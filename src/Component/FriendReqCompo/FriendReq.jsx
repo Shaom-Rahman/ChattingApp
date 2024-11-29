@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, set, ref, onValue, remove, push } from "firebase/database";
 
 
 const FriendReq = () => {
@@ -13,11 +13,24 @@ const FriendReq = () => {
 // --------------------- firebase variables ------------------
   const db = getDatabase();
 // ---------------------- function part -----------------------
+    // ----------------    remove part  ----------------
 const handelRemove = (CancelData)=>{
-  remove(ref(db , 'FriendRequest/' + CancelData.key))
-  
+  remove(ref(db , 'FriendRequest/' + CancelData.key))  
 
 } 
+// -------------------- accept part ---------------
+const handelConfirm = (FriendData)=>{
+  set(push(ref(db, 'friends/' )), {
+    friendId: FriendData.senderId ,
+    friendName: FriendData.senderName ,
+    friendPhoto: FriendData.senderPhoto , 
+    currentUserID: ReduxUser.uid ,
+    currentUserName: ReduxUser.displayName ,
+    currentUserPhoto: ReduxUser.photoURL ,
+  });
+  remove(ref(db , 'FriendRequest/' + FriendData.key))
+}
+
 // --------------------- real time data base --------------------
    useEffect(()=>{
       onValue(ref(db , 'FriendRequest/'), (snapshot) => {
@@ -63,6 +76,7 @@ const handelRemove = (CancelData)=>{
         {/* Buttons Section */}
         <div className="flex justify-around mt-6">
           <button
+          onClick={()=> handelConfirm()}
             className="px-5 py-2 font-Popins text-xl font-normal bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg active:scale-95 transition-all duration-300">
             Accept
           </button>

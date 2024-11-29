@@ -34,7 +34,7 @@ const  Navigate = useNavigate()
             </Link>
             <Link to={'/friendRequest'}> <FaUserPlus className='text-4xl hover:text-white'/> </Link>
             <Link to={'/'}> <FaUserTimes className='text-4xl hover:text-white'/> </Link>
-            <Link to={'/'}> <FaUserFriends className='text-4xl hover:text-white'/> </Link>
+            <Link to={'/FriendList'}> <FaUserFriends className='text-4xl hover:text-white'/> </Link>
             <Link to={'/SendRequestList'}> <RiFileUserFill className='text-4xl hover:text-white'/> </Link>
             <Link to={'/'}> <BiSolidMessageDetail className='text-4xl hover:text-white'/> </Link>
 
