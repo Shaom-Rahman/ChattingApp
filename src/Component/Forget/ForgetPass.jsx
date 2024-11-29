@@ -15,13 +15,12 @@ const ForgetPass = () => {
         } else{
             sendPasswordResetEmail(auth, inputData)
   .then(() => {
-     console.log('email disi')
+    //  console.log('email disi')
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
                
-
   });
         }
     }

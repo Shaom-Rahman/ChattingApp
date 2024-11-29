@@ -16,9 +16,6 @@ const LayoutOne = () => {
     }
   } , [])
   
-  
-
-  
   return (
     <>
     <Navbar/>

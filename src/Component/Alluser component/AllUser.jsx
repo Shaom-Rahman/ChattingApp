@@ -1,53 +1,71 @@
 import React, { useEffect, useState } from 'react'
 import CommonUser from '../Common/CommonUser'
-import { getDatabase, ref, onValue, push} from "firebase/database";
+import { getDatabase, ref, onValue, push, set} from "firebase/database";
 import { useSelector } from 'react-redux';
 
 const AllUser = () => { 
 
   // ----------------------- redux data ---------------------
-  const reduxUser = useSelector((state)=> state.currentUser.value)
+  const ReduxUser = useSelector((state) => state.currentUser.value)
+  // console.log(ReduxUser)
   // --------------------- state variables --------------------
-  const [alluserdata , setalluserdata] = useState([])
+  const [AllUserData , setAllUserData] = useState([])
 
   // --------------------- firebase variables ------------------
   const db = getDatabase();
 
   // --------------------- functions part --------------------
+  const handelAdd = (AddReq)=>{
+    // console.log(AddReq)
+    set(push(ref(db, 'FriendRequest/' )), {
+      senderId: ReduxUser.uid ,
+      senderName: ReduxUser.displayName ,
+      senderPhoto: ReduxUser.photoURL , 
+      receiverId: AddReq.key ,
+      receiverName: AddReq.userName , 
+      receiverPhoto: AddReq.userPhoto , 
+    });
+  }
   // -------------------- realtime data --------------------- 
 
-   useEffect(() =>{
-     onValue(ref(db , 'allUsers/') , (snapshot) => {
-//  console.log(snapshot)
+ useEffect(()=>{
+  onValue(ref(db , 'allUsers/') , (snapshot) =>{
+       // console.log(snapshot.val())
 
-    let arr =[]
+    let Arr = []
     snapshot.forEach((item)=>{
+        // console.log(item.val())
+        // Arr.push(item.val())
+        // console.log(item.val())
+        // console.log(item.key)
 
-     if(item.key != reduxUser.uid){
-      arr.push({...item.val() , key:item.key })
-
-     }
-       // console.log(item.key)
-      // console.log(item.val())
-      // arr.push(item.val())
+        if(item.key != ReduxUser.uid){
+          Arr.push({...item.val() , key: item.key})
+        }
     })
+        // console.log(Arr)
+  setAllUserData(Arr)
+  } ) ;
+  
+ } , [])
 
-    setalluserdata(arr)
-     });
-   } , []) ;
-
-   console.log(alluserdata)
-
+console.log(AllUserData)
   return (
     <>
     <section>
-    <h1 className='font-Popins font-bold text-3xl px-[20px] py-[30px]'>All Users </h1>
-    {
-      alluserdata.map((item)=>(
-        <CommonUser CommonUserPhoto={item.userphoto} CommonUserName={item.username}/>
-      )
-      )
-    }
+      <div className="container">
+        <h1 className='font-Popins font-bold text-3xl px-[20px] py-[30px]'>All Users </h1>
+      {
+        AllUserData.map((item)=> (
+          <div key={item.key} >
+            <CommonUser CommonUserPhoto={item.userPhoto } CommonUserName={item.userName} 
+            CommonButtonAdd={'ADD'} CommonButtonRemove={'REMOVE'} CommonButtonClick={()=>handelAdd(item)}
+            //  CommonButtonClick={()=> handelAdd(item)}
+              />
+        </div>
+        ))
+      }
+      </div>
     </section>
       
     </>

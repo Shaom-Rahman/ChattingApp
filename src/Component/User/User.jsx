@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 const User =() => {
 // --------------------------------- redux data ----------------------- 
 const sliceUser = useSelector((state) => state.currentUser.value)
-console.log(JSON.parse(localStorage.getItem('user')))
+// console.log(JSON.parse(localStorage.getItem('user')))
   return (
     <>
     <div className='w-full h-screen flex justify-center items-center'> 

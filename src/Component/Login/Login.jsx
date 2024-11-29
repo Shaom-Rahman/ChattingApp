@@ -12,8 +12,6 @@ import { userData } from '../../Slice/UserSlice';
 import { useDispatch } from 'react-redux';
 import { getDatabase, ref, set } from "firebase/database";
 
-
-
 const Login = () => {
  
   // --------------------------- useState ---------------------------
@@ -26,12 +24,11 @@ const Login = () => {
 
   //  --------------------- redux variables -----------------------
   const dispatch = useDispatch()
-  const db = getDatabase();
-
-
+ 
   // ------------------------  firebase variable --------------
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+   const db = getDatabase();
   // --------------------------- function -------------------------
   const handelsubmit = (e)=>{
     setLoading(true)
@@ -61,7 +58,7 @@ const Login = () => {
     navigate('/')
     // -------------------- set data to the redux ------------- 
     dispatch(userData(userCredential.user))
-    console.log(userCredential.user)
+    // console.log(userCredential.user)
 
     toast.success('Login Success!', {
       position: "top-right", autoClose: 5000, hideProgressBar: false, closeOnClick: true,
@@ -72,16 +69,23 @@ const Login = () => {
       // --------------------- set data to local store ------------------
       localStorage.getItem('user' , JSON.stringify(userCredential.user)  )
       // ------------------- set user real time codes -----------------
+      
       set(ref(db, 'allUsers/' + userCredential.user.uid ), {
-        username: userCredential.user.displayName ,
-        userphoto : userCredential.user.photoURL,
+        userName : userCredential.user.displayName , 
+        userPhoto : userCredential.user.photoURL ,
+        
       });
+
+      // set(ref(db, 'allUsers/' + userCredential.user.uid ), {
+      //   username: userCredential.user.displayName ,
+      //   userphoto : userCredential.user.photoURL,
+      // });
    }
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorCode)
+    // console.log(errorCode)
     if (errorCode == 'auth/invalid-credential')
     {
       toast.warn('Something went wrong!', {

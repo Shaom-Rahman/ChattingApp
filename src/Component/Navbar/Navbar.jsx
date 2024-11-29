@@ -8,6 +8,8 @@ import { AiFillMessage } from "react-icons/ai";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { IoLogOut } from "react-icons/io5";
 import { useSelector } from 'react-redux';
+import { RiFileUserFill } from "react-icons/ri";
+
 
 
 const Navbar = () => {
@@ -30,10 +32,12 @@ const  Navigate = useNavigate()
                 <img src={sliceUser?.photoURL} alt='profile'/>
             </div>
             </Link>
-            <Link to={'/'}> <FaUserPlus className='text-4xl hover:text-white'/> </Link>
+            <Link to={'/friendRequest'}> <FaUserPlus className='text-4xl hover:text-white'/> </Link>
             <Link to={'/'}> <FaUserTimes className='text-4xl hover:text-white'/> </Link>
             <Link to={'/'}> <FaUserFriends className='text-4xl hover:text-white'/> </Link>
+            <Link to={'/SendRequestList'}> <RiFileUserFill className='text-4xl hover:text-white'/> </Link>
             <Link to={'/'}> <BiSolidMessageDetail className='text-4xl hover:text-white'/> </Link>
+
             <button onClick={handelLogout} > <IoLogOut className='text-5xl text-center hover:text-white'/> </button>
         </div>
     </nav>

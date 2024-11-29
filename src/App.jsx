@@ -9,6 +9,8 @@ import ForgetPass from './Component/Forget/ForgetPass'
 import LayoutOne from './Component/Layouts/LayoutOne'
 import Home from './Pages/Home'
 import AllUserPage from './Pages/AllUserPage'
+import FriendReqPage from './Pages/FriendReqPage'
+import SendReq from './Component/SendReqCompo/SendReq'
 
 function App() {
  const myRoute = createBrowserRouter(createRoutesFromElements(
@@ -16,6 +18,9 @@ function App() {
     <Route path='/' element={<LayoutOne/>} > 
     <Route index element={<Home/>} />
     <Route path='/allUsers' element={<AllUserPage/>} />
+    <Route path='/friendRequest' element={<FriendReqPage/>} />
+    <Route path='/SendRequestList' element={<SendReq/>} />
+
     </Route>
     <Route  path='/register' element={<Register/>} />
     <Route path='/login' element={<Login/>} />
