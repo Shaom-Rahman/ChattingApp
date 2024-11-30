@@ -21,6 +21,7 @@ const handelRemove = (CancelData)=>{
 // -------------------- accept part ---------------
 const handelConfirm = (FriendData)=>{
   set(push(ref(db, 'friends/' )), {
+
     friendId: FriendData.senderId ,
     friendName: FriendData.senderName ,
     friendPhoto: FriendData.senderPhoto , 
